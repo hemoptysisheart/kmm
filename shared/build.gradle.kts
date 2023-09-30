@@ -1,20 +1,26 @@
 plugins {
-    kotlin("multiplatform")
     id("com.android.library")
+    id("io.kotest.multiplatform")
+
+    kotlin("multiplatform")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     targetHierarchy.default()
 
+    // Android
     android {
+        publishLibraryVariants("debug", "release")
+
         compilations.all {
             kotlinOptions {
                 jvmTarget = "17"
             }
         }
     }
-    
+
+    // iOS
     listOf(
         iosX64(),
         iosArm64(),
@@ -31,9 +37,10 @@ kotlin {
                 //put your multiplatform dependencies here
             }
         }
+
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
+                implementation("io.kotest:kotest-framework-engine:5.7.2")
             }
         }
     }
