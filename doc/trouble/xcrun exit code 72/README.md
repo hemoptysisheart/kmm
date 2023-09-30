@@ -194,6 +194,162 @@ output:
 	... 169 more
 ```
 
+## `kdoctor` 상태
+
+Xcode의 커맨드 라인 툴 설치를 인식하지 못 한다.
+
+```
+➜  kmm git:(issue/8-xcrun_72_error) kdoctor
+Environment diagnose (to see all details, use -v option):
+[✓] Operation System
+[✓] Java
+[✓] Android Studio
+[✖] Xcode
+  ✖ Current command line tools: /Library/Developer/CommandLineTools
+    You have to select command line tools bundled to Xcode
+    Command line tools can be configured in Xcode -> Settings -> Locations -> Locations
+[✖] Cocoapods
+  ✖ cocoapods not found
+    Get cocoapods from https://guides.cocoapods.org/using/getting-started.html#installation
+
+Conclusion:
+  ✖ KDoctor has diagnosed one or more problems while checking your environment.
+    Please check the output for problem description and possible solutions.
+```
+
+## Xcode 설정
+
+Xcode 설정 열기. (Xcode -> Settings -> Locations -> Locations)
+
+![Xcode 설정 위치](xcode%20preferences.png)
+
+Command line Tools 드랍다운 선택하면 인증창 나옴.
+
+![command line tools.png](command%20line%20tools.png)
+
+설정된 Command Line Tools 경로.
+
+![command line tools setted.png](command%20line%20tools%20setted.png)
+
+정상적인 `kdoctor` 결과.
+
+```
+➜  kmm git:(issue/8-xcrun_72_error) kdoctor
+Environment diagnose (to see all details, use -v option):
+[✓] Operation System
+[✓] Java
+[✓] Android Studio
+[✓] Xcode
+[✖] Cocoapods
+  ✖ cocoapods not found
+    Get cocoapods from https://guides.cocoapods.org/using/getting-started.html#installation
+
+Conclusion:
+  ✖ KDoctor has diagnosed one or more problems while checking your environment.
+    Please check the output for problem description and possible solutions.
+```
+
+## 확인
+
+1. [`./gradlew :shared:check --continue`](./../../../.run/_shared%20%5Bcheck%5D.run.xml) 실행.
+2. `BUILD SUCCESSFUL in ...` 메시지가 나오면 성공.
+
+```
+> Configure project :shared
+w: Kotlin Multiplatform <-> Android Gradle Plugin compatibility issue: The applied Android Gradle Plugin version (8.1.1) is higher than the maximum known to the Kotlin Gradle Plugin. Tooling stability in such configuration isn't tested, please report encountered issues to https://kotl.in/issue
+Minimum supported Android Gradle Plugin version: 4.1
+Maximum tested Android Gradle Plugin version: 8.0
+To suppress this message add 'kotlin.mpp.androidGradlePluginCompatibility.nowarn=true' to your gradle.properties
+
+
+> Task :shared:compileKotlinIosSimulatorArm64 UP-TO-DATE
+> Task :shared:iosSimulatorArm64ProcessResources NO-SOURCE
+> Task :shared:iosSimulatorArm64MainKlibrary UP-TO-DATE
+> Task :shared:compileTestKotlinIosSimulatorArm64 NO-SOURCE
+> Task :shared:linkDebugTestIosSimulatorArm64 NO-SOURCE
+> Task :shared:iosSimulatorArm64Test SKIPPED
+> Task :shared:compileKotlinIosX64 UP-TO-DATE
+> Task :shared:iosX64ProcessResources NO-SOURCE
+> Task :shared:iosX64MainKlibrary UP-TO-DATE
+> Task :shared:compileTestKotlinIosX64 NO-SOURCE
+> Task :shared:linkDebugTestIosX64 NO-SOURCE
+> Task :shared:iosX64Test SKIPPED
+> Task :shared:preBuild UP-TO-DATE
+> Task :shared:preDebugBuild UP-TO-DATE
+> Task :shared:generateDebugResValues UP-TO-DATE
+> Task :shared:generateDebugResources UP-TO-DATE
+> Task :shared:packageDebugResources UP-TO-DATE
+> Task :shared:parseDebugLocalResources UP-TO-DATE
+> Task :shared:processDebugManifest UP-TO-DATE
+> Task :shared:generateDebugRFile UP-TO-DATE
+> Task :shared:compileDebugKotlinAndroid UP-TO-DATE
+> Task :shared:javaPreCompileDebug UP-TO-DATE
+> Task :shared:compileDebugJavaWithJavac NO-SOURCE
+> Task :shared:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :shared:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :shared:preDebugUnitTestBuild UP-TO-DATE
+> Task :shared:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :shared:compileDebugUnitTestKotlinAndroid NO-SOURCE
+> Task :shared:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :shared:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :shared:processDebugJavaRes UP-TO-DATE
+> Task :shared:processDebugUnitTestJavaRes NO-SOURCE
+> Task :shared:testDebugUnitTest NO-SOURCE
+> Task :shared:preReleaseBuild UP-TO-DATE
+> Task :shared:generateReleaseResValues UP-TO-DATE
+> Task :shared:generateReleaseResources UP-TO-DATE
+> Task :shared:packageReleaseResources UP-TO-DATE
+> Task :shared:parseReleaseLocalResources UP-TO-DATE
+> Task :shared:processReleaseManifest UP-TO-DATE
+> Task :shared:generateReleaseRFile UP-TO-DATE
+> Task :shared:compileReleaseKotlinAndroid UP-TO-DATE
+> Task :shared:javaPreCompileRelease UP-TO-DATE
+> Task :shared:compileReleaseJavaWithJavac NO-SOURCE
+> Task :shared:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :shared:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :shared:preReleaseUnitTestBuild UP-TO-DATE
+> Task :shared:generateReleaseUnitTestStubRFile UP-TO-DATE
+> Task :shared:compileReleaseUnitTestKotlinAndroid NO-SOURCE
+> Task :shared:javaPreCompileReleaseUnitTest UP-TO-DATE
+> Task :shared:compileReleaseUnitTestJavaWithJavac NO-SOURCE
+> Task :shared:processReleaseJavaRes UP-TO-DATE
+> Task :shared:processReleaseUnitTestJavaRes NO-SOURCE
+> Task :shared:testReleaseUnitTest NO-SOURCE
+> Task :shared:allTests NO-SOURCE
+> Task :shared:mergeDebugJniLibFolders UP-TO-DATE
+> Task :shared:mergeDebugNativeLibs NO-SOURCE
+> Task :shared:stripDebugDebugSymbols NO-SOURCE
+> Task :shared:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :shared:extractDebugAnnotations UP-TO-DATE
+> Task :shared:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :shared:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :shared:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :shared:mergeDebugShaders UP-TO-DATE
+> Task :shared:compileDebugShaders NO-SOURCE
+> Task :shared:generateDebugAssets UP-TO-DATE
+> Task :shared:packageDebugAssets UP-TO-DATE
+> Task :shared:prepareDebugArtProfile UP-TO-DATE
+> Task :shared:prepareLintJarForPublish UP-TO-DATE
+> Task :shared:mergeDebugJavaResource UP-TO-DATE
+> Task :shared:syncDebugLibJars UP-TO-DATE
+> Task :shared:writeDebugAarMetadata UP-TO-DATE
+> Task :shared:bundleDebugLocalLintAar UP-TO-DATE
+> Task :shared:createFullJarDebug UP-TO-DATE
+> Task :shared:extractProguardFiles UP-TO-DATE
+> Task :shared:preDebugAndroidTestBuild UP-TO-DATE
+> Task :shared:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :shared:writeDebugLintModelMetadata UP-TO-DATE
+> Task :shared:lintAnalyzeDebug UP-TO-DATE
+> Task :shared:lintReportDebug UP-TO-DATE
+> Task :shared:lintDebug
+> Task :shared:lint
+> Task :shared:test UP-TO-DATE
+> Task :shared:check
+
+BUILD SUCCESSFUL in 1s
+47 actionable tasks: 1 executed, 46 up-to-date
+```
+
 ## 참고
 
 [^1]: [Kotlin Native](https://kotlinlang.org/docs/native-overview.html)
