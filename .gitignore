@@ -114,3 +114,4 @@ Temporary Items
 *.rar
 hs_err_pid*
 replay_pid*
+.java-version
