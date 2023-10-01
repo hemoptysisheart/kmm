@@ -12,6 +12,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
+@OptIn(ExperimentalStdlibApi::class)
 @Suppress("NonAsciiCharacters")
 abstract class AbstractListTest<L : List<Long>> {
     private lateinit var list: L
@@ -298,6 +299,49 @@ abstract class AbstractListTest<L : List<Long>> {
             for (data in src) {
                 assertFalse(list.contains(data))
             }
+        }
+    }
+
+    @Test
+    fun `임의의 조작`() {
+        // GIVEN
+        val expected = mutableListOf<Long>()
+        val opCount = RANDOM.nextInt(50, 500)
+        println("[GIVEN] opCount=$opCount")
+
+        // WHEN
+        (0..<opCount).forEach { i ->
+            val op = RANDOM.nextInt(3)
+            when {
+                0 == op && 0 < expected.size -> RANDOM.nextInt(expected.size).let {
+                    println("[WHEN] expected.size=${expected.size} => list.remove(index=$it)")
+                    expected.removeAt(it)
+                    list.remove(it)
+                }
+
+                1 == op -> RANDOM.nextLong().let {
+                    val index = RANDOM.nextInt(expected.size + 1)
+                    println("[WHEN] expected.size=${expected.size} => list.add(index=$index, data=$it)")
+                    expected.add(index, it)
+                    list.add(index, it)
+                }
+
+                else -> RANDOM.nextLong().let {
+                    println("[WHEN] expected.size=${expected.size} => list.add(data=$it)")
+                    expected.add(it)
+                    list.add(it)
+                }
+            }
+        }
+        println("[WHEN] expected=$expected")
+        println("[WHEN] list=$list")
+
+        // THEN
+        assertEquals(expected.size, list.size)
+        assertEquals(expected[0], list.first)
+        assertEquals(expected[expected.size - 1], list.last)
+        for (i in 0..<expected.size) {
+            assertEquals(expected[i], list[i])
         }
     }
 }
