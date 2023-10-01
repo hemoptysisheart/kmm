@@ -36,6 +36,7 @@ class SingleLinkedListTest {
 
         // THEN
         assertEquals(0, size)
+        println()
     }
 
     @Test
@@ -54,6 +55,7 @@ class SingleLinkedListTest {
         assertEquals(data, list.last)
         assertEquals(data, list[index])
         assertTrue(list.contains(data))
+        println()
     }
 
     @Test
@@ -80,6 +82,7 @@ class SingleLinkedListTest {
             for (i in data.indices) {
                 assertEquals(data[i], list[i])
             }
+        println()
         }
     }
 
@@ -87,6 +90,7 @@ class SingleLinkedListTest {
     fun `add - 리스트에 데이터 추가`() {
         given(
             names("src", "index", "data"),
+            dataset(listOf(), 0, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong()), 0, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong()), 1, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), 0, RANDOM.nextLong()),
@@ -94,7 +98,7 @@ class SingleLinkedListTest {
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), 2, RANDOM.nextLong())
         ) { src, index, data ->
             // GIVEN
-            val list = SingleLinkedList<Long>()
+            val list = src.toSingleLinkedList()
             val size = list.size
             println("[GIVEN] size=$size")
 
@@ -106,15 +110,16 @@ class SingleLinkedListTest {
             assertEquals(size + 1, list.size)
             assertEquals(data, list[index])
             assertTrue(list.contains(data))
+            println()
         }
     }
 
     @Test
     fun `add - 잘못된 위치에 추가`() {
         given(
-            names("list", "index", "data"),
-            dataset(listOf<Long>(), -1, RANDOM.nextLong()),
-            dataset(listOf<Long>(), 1, RANDOM.nextLong()),
+            names("src", "index", "data"),
+            dataset(listOf(), -1, RANDOM.nextLong()),
+            dataset(listOf(), 1, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong()), -1, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong()), 2, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), -1, RANDOM.nextLong()),
@@ -140,6 +145,7 @@ class SingleLinkedListTest {
             for (i in src.indices) {
                 assertEquals(src[i], list[i])
             }
+            println()
         }
     }
 
@@ -160,6 +166,7 @@ class SingleLinkedListTest {
         assertNull(list.first)
         assertNull(list.last)
         assertFalse(list.contains(data))
+        println()
     }
 
     @Test
@@ -177,7 +184,7 @@ class SingleLinkedListTest {
             println("[GIVEN] size=$size, data=$data, last=$last, expectedFirst=$second")
 
             // WHEN
-            val removed = this.list.remove(0)
+            val removed = list.remove(0)
             println("[WHEN] removed=$removed")
 
             // THEN
@@ -185,6 +192,7 @@ class SingleLinkedListTest {
             assertEquals(second, list.first)
             assertEquals(last, list.last)
             assertFalse(list.contains(data))
+            println()
         }
     }
 
@@ -211,6 +219,7 @@ class SingleLinkedListTest {
             assertEquals(first, list.first)
             assertEquals(lastSecond, list.last)
             assertFalse(list.contains(removed))
+            println()
         }
     }
 
@@ -237,6 +246,7 @@ class SingleLinkedListTest {
             assertEquals(size - 1, list.size)
             assertEquals(data, removed)
             assertFalse(list.contains(data))
+            println()
         }
     }
 
@@ -271,6 +281,7 @@ class SingleLinkedListTest {
             for (i in src.indices) {
                 assertEquals(src[i], list[i])
             }
+            println()
         }
     }
 
@@ -298,6 +309,7 @@ class SingleLinkedListTest {
             for (data in src) {
                 assertFalse(list.contains(data))
             }
+            println()
         }
     }
 }
