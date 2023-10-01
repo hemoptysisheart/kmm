@@ -14,6 +14,24 @@ Kotlin Multiplatform for mobile[^1] 공부.
 - [What is a singly linked list?](https://www.educative.io/answers/what-is-a-singly-linked-list)
 - [Linked List data structure](https://www.slideshare.net/MarcusBiel/linked-listdata-structure) : P.7 ~ 33
 
+### Double Linked List
+
+- [CS 1332 Data Structures and Algorithms Visualization Tool - Doubly LinkedList](https://csvistool.com/DoublyLinkedList)
+
+## Algorithm
+
+### Simple Sort
+
+TBD
+
+### Merge Sort
+
+TBD
+
+## 알고리즘 기반 게임 : 미로 찾기
+
+출발 ~ 도착까지 단 1개의 길만 있는 미로 만들기.
+
 ## 문제 해결
 
 1. [`The /usr/bin/xcrun command returned non-zero exit code: 72.`](./doc/trouble/xcrun%20exit%20code%2072)
