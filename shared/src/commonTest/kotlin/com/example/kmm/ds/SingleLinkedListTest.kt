@@ -21,6 +21,7 @@ class SingleLinkedListTest {
     fun setUp() {
         list = SingleLinkedList()
         println("[SETUP] list=$list")
+        println()
     }
 
     @Test
@@ -33,6 +34,7 @@ class SingleLinkedListTest {
     fun `size - 새 리스트의 크기`() {
         // WHEN
         val size = list.size
+        println("[WHEN] size=$size")
 
         // THEN
         assertEquals(0, size)
@@ -87,6 +89,7 @@ class SingleLinkedListTest {
     fun `add - 리스트에 데이터 추가`() {
         given(
             names("src", "index", "data"),
+            dataset(listOf(), 0, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong()), 0, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong()), 1, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), 0, RANDOM.nextLong()),
@@ -94,7 +97,7 @@ class SingleLinkedListTest {
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), 2, RANDOM.nextLong())
         ) { src, index, data ->
             // GIVEN
-            val list = SingleLinkedList<Long>()
+            val list = src.toSingleLinkedList()
             val size = list.size
             println("[GIVEN] size=$size")
 
@@ -112,9 +115,9 @@ class SingleLinkedListTest {
     @Test
     fun `add - 잘못된 위치에 추가`() {
         given(
-            names("list", "index", "data"),
-            dataset(listOf<Long>(), -1, RANDOM.nextLong()),
-            dataset(listOf<Long>(), 1, RANDOM.nextLong()),
+            names("src", "index", "data"),
+            dataset(listOf(), -1, RANDOM.nextLong()),
+            dataset(listOf(), 1, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong()), -1, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong()), 2, RANDOM.nextLong()),
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), -1, RANDOM.nextLong()),
@@ -131,6 +134,7 @@ class SingleLinkedListTest {
             assertFailsWith<IndexOutOfBoundsException> {
                 list.add(index, data)
             }
+            println("[WHEN] list=$list")
 
             // THEN
             assertEquals(size, list.size)
@@ -177,7 +181,7 @@ class SingleLinkedListTest {
             println("[GIVEN] size=$size, data=$data, last=$last, expectedFirst=$second")
 
             // WHEN
-            val removed = this.list.remove(0)
+            val removed = list.remove(0)
             println("[WHEN] removed=$removed")
 
             // THEN
@@ -263,6 +267,7 @@ class SingleLinkedListTest {
             assertFailsWith<IndexOutOfBoundsException> {
                 list.remove(index)
             }
+            println("[WHEN] list=$list")
 
             // THEN
             assertEquals(size, list.size)

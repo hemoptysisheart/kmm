@@ -4,6 +4,7 @@ fun <V1> given(name: String, vararg datasets: V1, testcase: (V1) -> Unit) {
     for (dataset in datasets) {
         println("[GIVEN] $name=$dataset")
         testcase(dataset)
+        println()
     }
 }
 
@@ -11,6 +12,7 @@ fun <V1, V2> given(names: Names2, vararg datasets: Dataset2<V1, V2>, testcase: (
     for (dataset in datasets) {
         println("[GIVEN] ${dataset.toString(names)}")
         testcase(dataset.v1, dataset.v2)
+        println()
     }
 }
 
@@ -22,6 +24,7 @@ fun <V1, V2, V3> given(
     for (dataset in datasets) {
         println("[GIVEN] ${dataset.toString(names)}")
         testcase(dataset.v1, dataset.v2, dataset.v3)
+        println()
     }
 }
 
@@ -33,6 +36,7 @@ fun <V1, V2, V3, V4> given(
     for (dataset in datasets) {
         println("[GIVEN] ${dataset.toString(names)}")
         case(dataset.v1, dataset.v2, dataset.v3, dataset.v4)
+        println()
     }
 }
 
