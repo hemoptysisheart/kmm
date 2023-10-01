@@ -21,6 +21,7 @@ class SingleLinkedListTest {
     fun setUp() {
         list = SingleLinkedList()
         println("[SETUP] list=$list")
+        println()
     }
 
     @Test
@@ -33,10 +34,10 @@ class SingleLinkedListTest {
     fun `size - 새 리스트의 크기`() {
         // WHEN
         val size = list.size
+        println("[WHEN] size=$size")
 
         // THEN
         assertEquals(0, size)
-        println()
     }
 
     @Test
@@ -55,7 +56,6 @@ class SingleLinkedListTest {
         assertEquals(data, list.last)
         assertEquals(data, list[index])
         assertTrue(list.contains(data))
-        println()
     }
 
     @Test
@@ -82,7 +82,6 @@ class SingleLinkedListTest {
             for (i in data.indices) {
                 assertEquals(data[i], list[i])
             }
-        println()
         }
     }
 
@@ -110,7 +109,6 @@ class SingleLinkedListTest {
             assertEquals(size + 1, list.size)
             assertEquals(data, list[index])
             assertTrue(list.contains(data))
-            println()
         }
     }
 
@@ -136,6 +134,7 @@ class SingleLinkedListTest {
             assertFailsWith<IndexOutOfBoundsException> {
                 list.add(index, data)
             }
+            println("[WHEN] list=$list")
 
             // THEN
             assertEquals(size, list.size)
@@ -145,7 +144,6 @@ class SingleLinkedListTest {
             for (i in src.indices) {
                 assertEquals(src[i], list[i])
             }
-            println()
         }
     }
 
@@ -166,7 +164,6 @@ class SingleLinkedListTest {
         assertNull(list.first)
         assertNull(list.last)
         assertFalse(list.contains(data))
-        println()
     }
 
     @Test
@@ -192,7 +189,6 @@ class SingleLinkedListTest {
             assertEquals(second, list.first)
             assertEquals(last, list.last)
             assertFalse(list.contains(data))
-            println()
         }
     }
 
@@ -219,7 +215,6 @@ class SingleLinkedListTest {
             assertEquals(first, list.first)
             assertEquals(lastSecond, list.last)
             assertFalse(list.contains(removed))
-            println()
         }
     }
 
@@ -246,7 +241,6 @@ class SingleLinkedListTest {
             assertEquals(size - 1, list.size)
             assertEquals(data, removed)
             assertFalse(list.contains(data))
-            println()
         }
     }
 
@@ -273,6 +267,7 @@ class SingleLinkedListTest {
             assertFailsWith<IndexOutOfBoundsException> {
                 list.remove(index)
             }
+            println("[WHEN] list=$list")
 
             // THEN
             assertEquals(size, list.size)
@@ -281,7 +276,6 @@ class SingleLinkedListTest {
             for (i in src.indices) {
                 assertEquals(src[i], list[i])
             }
-            println()
         }
     }
 
@@ -309,7 +303,6 @@ class SingleLinkedListTest {
             for (data in src) {
                 assertFalse(list.contains(data))
             }
-            println()
         }
     }
 }
