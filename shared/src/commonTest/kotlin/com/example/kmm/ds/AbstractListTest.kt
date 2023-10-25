@@ -19,7 +19,10 @@ abstract class AbstractListTest<L : List<Long>> {
 
     protected abstract fun list(): L
 
-    protected fun toList(source: kotlin.collections.List<Long>): L {
+    /**
+     * [add - 리스트 마지막에 데이터 추가]를 통과한다는 전제하에 다른 테스트에 쓸 수 있는 유틸리티 메서드.
+     */
+    private fun toList(source: kotlin.collections.List<Long>): L {
         val list = list()
         for (data in source) {
             list.add(data)
