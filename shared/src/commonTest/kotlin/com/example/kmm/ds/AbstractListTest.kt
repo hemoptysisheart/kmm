@@ -19,6 +19,14 @@ abstract class AbstractListTest<L : List<Long>> {
 
     protected abstract fun list(): L
 
+    protected fun toList(source: kotlin.collections.List<Long>): L {
+        val list = list()
+        for (data in source) {
+            list.add(data)
+        }
+        return list
+    }
+
     @BeforeTest
     open fun setUp() {
         list = list()
@@ -58,12 +66,9 @@ abstract class AbstractListTest<L : List<Long>> {
     fun `add - 리스트 마지막에 데이터 추가`() {
         given(
             names("list", "data"),
-            dataset(SingleLinkedList<Long>(), listOf(RANDOM.nextLong())),
-            dataset(SingleLinkedList<Long>(), listOf(RANDOM.nextLong(), RANDOM.nextLong())),
-            dataset(
-                SingleLinkedList<Long>(),
-                listOf(RANDOM.nextLong(), RANDOM.nextLong(), RANDOM.nextLong())
-            )
+            dataset(list(), listOf(RANDOM.nextLong())),
+            dataset(list(), listOf(RANDOM.nextLong(), RANDOM.nextLong())),
+            dataset(list(), listOf(RANDOM.nextLong(), RANDOM.nextLong(), RANDOM.nextLong()))
         ) { list, data ->
             // WHEN
             for (d in data) {
@@ -93,7 +98,7 @@ abstract class AbstractListTest<L : List<Long>> {
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), 2, RANDOM.nextLong())
         ) { src, index, data ->
             // GIVEN
-            val list = src.toSingleLinkedList()
+            val list = toList(src)
             val size = list.size
             println("[GIVEN] size=$size")
 
@@ -120,7 +125,7 @@ abstract class AbstractListTest<L : List<Long>> {
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), 3, RANDOM.nextLong()),
         ) { src, index, data ->
             // GIVEN
-            val list = src.toSingleLinkedList()
+            val list = toList(src)
             val size = list.size
             val first = list.first
             val last = list.last
@@ -147,7 +152,7 @@ abstract class AbstractListTest<L : List<Long>> {
     fun `remove - 1개짜리 리스트에서 데이터 삭제하기`() {
         // GIVEN
         val data = RANDOM.nextLong()
-        val list = SingleLinkedList<Long>()
+        val list = list()
         list.add(data)
         println("[GIVEN] data=$data, list=$list")
 
@@ -166,10 +171,11 @@ abstract class AbstractListTest<L : List<Long>> {
     fun `remove - 첫번째 데이터 삭제하기`() {
         given(
             "src",
-            listOf(RANDOM.nextLong(), RANDOM.nextLong()).toSingleLinkedList(),
-            listOf(RANDOM.nextLong(), RANDOM.nextLong(), RANDOM.nextLong()).toSingleLinkedList()
-        ) { list ->
+            listOf(RANDOM.nextLong(), RANDOM.nextLong()),
+            listOf(RANDOM.nextLong(), RANDOM.nextLong(), RANDOM.nextLong())
+        ) { src ->
             // GIVEN
+            val list = toList(src)
             val size = list.size
             val data = list[0]
             val last = list.last
@@ -199,7 +205,7 @@ abstract class AbstractListTest<L : List<Long>> {
             val size = src.size
             val first = src[0]
             val lastSecond = src[size - 2]
-            val list = src.toSingleLinkedList()
+            val list = toList(src)
             println("[GIVEN] size=$size, first=$first, lastSecond=$lastSecond, list=$list")
 
             // WHEN
@@ -223,7 +229,7 @@ abstract class AbstractListTest<L : List<Long>> {
             listOf(RANDOM.nextLong(), RANDOM.nextLong(), RANDOM.nextLong())
         ) { src ->
             // GIVEN
-            val list = src.toSingleLinkedList()
+            val list = toList(src)
             val size = list.size
             val index = RANDOM.nextInt(size)
             val data = list[index]
@@ -253,7 +259,7 @@ abstract class AbstractListTest<L : List<Long>> {
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), 2)
         ) { src, index ->
             // GIVEN
-            val list = src.toSingleLinkedList()
+            val list = toList(src)
             val size = list.size
             val first = list.first
             val last = list.last
@@ -285,7 +291,7 @@ abstract class AbstractListTest<L : List<Long>> {
             listOf(RANDOM.nextLong(), RANDOM.nextLong(), RANDOM.nextLong())
         ) { src ->
             // GIVEN
-            val list = src.toSingleLinkedList()
+            val list = toList(src)
             println("[GIVEN] list=$list")
 
             // WHEN
