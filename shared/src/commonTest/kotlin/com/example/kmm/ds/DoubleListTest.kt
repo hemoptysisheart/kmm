@@ -4,8 +4,8 @@ import kotlin.test.Test
 import kotlin.test.assertIs
 
 @Suppress("NonAsciiCharacters")
-class SingleLinkedListTest : AbstractListTest<SingleLinkedList<Long>>() {
-    override fun list() = SingleLinkedList<Long>()
+class DoubleListTest : AbstractListTest<DoubleLinkedList<Long>>() {
+    override fun list(): DoubleLinkedList<Long> = DoubleLinkedList()
 
     @Test
     fun `list - 테스트 실행용`() {
@@ -14,6 +14,6 @@ class SingleLinkedListTest : AbstractListTest<SingleLinkedList<Long>>() {
         println("[WHEN] list=$list")
 
         // THEN
-        assertIs<SingleLinkedList<Long>>(list)
+        assertIs<DoubleLinkedList<Long>>(list)
     }
 }
