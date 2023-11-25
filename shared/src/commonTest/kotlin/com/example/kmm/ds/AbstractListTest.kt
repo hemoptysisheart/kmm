@@ -58,6 +58,7 @@ abstract class AbstractListTest<L : List<Long>> {
         println("[WHEN] index=$index")
 
         // THEN
+        assertEquals(0, index)
         assertEquals(1, list.size)
         assertEquals(data, list.first)
         assertEquals(data, list.last)
@@ -74,8 +75,9 @@ abstract class AbstractListTest<L : List<Long>> {
             dataset(list(), listOf(RANDOM.nextLong(), RANDOM.nextLong(), RANDOM.nextLong()))
         ) { list, data ->
             // WHEN
+            val indexes = mutableListOf<Int>()
             for (d in data) {
-                list.add(d)
+                indexes.add(list.add(d))
             }
             println("[WHEN] list=$list")
 
@@ -83,6 +85,7 @@ abstract class AbstractListTest<L : List<Long>> {
             assertEquals(data.size, list.size)
             assertEquals(data[0], list.first)
             assertEquals(data[data.size - 1], list.last)
+            assertEquals(data.indices.toList(), indexes)
             for (i in data.indices) {
                 assertEquals(data[i], list[i])
             }
@@ -250,12 +253,12 @@ abstract class AbstractListTest<L : List<Long>> {
     }
 
     @Test
-    fun `remove - 없는 인덱스을 삭제하기`() {
+    fun `remove - 없는 인덱스를 삭제하기`() {
         given(
             names("list", "index"),
-            dataset(listOf<Long>(), -1),
-            dataset(listOf<Long>(), 0),
-            dataset(listOf<Long>(), 1),
+            dataset(listOf(), -1),
+            dataset(listOf(), 0),
+            dataset(listOf(), 1),
             dataset(listOf(RANDOM.nextLong()), -1),
             dataset(listOf(RANDOM.nextLong()), 1),
             dataset(listOf(RANDOM.nextLong(), RANDOM.nextLong()), -1),
@@ -322,25 +325,29 @@ abstract class AbstractListTest<L : List<Long>> {
         (0..<opCount).forEach { i ->
             val op = RANDOM.nextInt(3)
             when {
-                0 == op && 0 < expected.size -> RANDOM.nextInt(expected.size).let {
+                (0 == op || 1 == op) && 0 < expected.size -> RANDOM.nextInt(expected.size).let {
                     println("[WHEN] expected.size=${expected.size} => list.remove(index=$it)")
                     expected.removeAt(it)
                     list.remove(it)
+                    println("[WHEN] list=$list")
                 }
 
-                1 == op -> RANDOM.nextLong().let {
+                2 == op -> RANDOM.nextLong().let {
                     val index = RANDOM.nextInt(expected.size + 1)
                     println("[WHEN] expected.size=${expected.size} => list.add(index=$index, data=$it)")
                     expected.add(index, it)
                     list.add(index, it)
+                    println("[WHEN] list=$list")
                 }
 
                 else -> RANDOM.nextLong().let {
                     println("[WHEN] expected.size=${expected.size} => list.add(data=$it)")
                     expected.add(it)
                     list.add(it)
+                    println("[WHEN] list=$list")
                 }
             }
+            println()
         }
         println("[WHEN] expected=$expected")
         println("[WHEN] list=$list")
